@@ -708,8 +708,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'smartixai0@gmail.com'
-EMAIL_HOST_PASSWORD = 'ooei kywf xall cyxz'
+EMAIL_HOST_USER = 'smartixai.info@gmail.com'
+EMAIL_HOST_PASSWORD = 'ubxv tnht wacp mwos'
 
 ONE_RUNNING_JOB_IN_QUEUE_PER_USER = to_bool(os.getenv('ONE_RUNNING_JOB_IN_QUEUE_PER_USER', False))
 
