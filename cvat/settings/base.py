@@ -705,11 +705,11 @@ SMOKESCREEN_ENABLED = True
 # But it won't work without additional configuration, so we set it to None
 # to check configuration and throw ImproperlyConfigured if thats a case
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = ‘smtp.gmail.com’
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = ‘smartixai0@gmail.com’
-EMAIL_HOST_PASSWORD = ‘Sm4420674237’
+EMAIL_HOST_USER = 'smartixai0@gmail.com'
+EMAIL_HOST_PASSWORD = 'Sm4420674237'
 
 ONE_RUNNING_JOB_IN_QUEUE_PER_USER = to_bool(os.getenv('ONE_RUNNING_JOB_IN_QUEUE_PER_USER', False))
 
