@@ -255,7 +255,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # https://github.com/pennersr/django-allauth
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email' 
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
@@ -386,6 +386,7 @@ USE_L10N = True
 USE_TZ = True
 
 CSRF_COOKIE_NAME = "csrftoken"
+CSRF_TRUSTED_ORIGINS = ["https://*", "http://*"]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
