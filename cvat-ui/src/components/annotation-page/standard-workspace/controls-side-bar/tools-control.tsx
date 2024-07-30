@@ -44,12 +44,12 @@ import {
 import DetectorRunner, { DetectorRequestBody } from 'components/model-runner-modal/detector-runner';
 import LabelSelector from 'components/label-selector/label-selector';
 import CVATTooltip from 'components/common/cvat-tooltip';
+import CVATMarkdown from 'components/common/cvat-markdown';
 
 import ApproximationAccuracy, {
     thresholdFromAccuracy,
 } from 'components/annotation-page/standard-workspace/controls-side-bar/approximation-accuracy';
 import { switchToolsBlockerState } from 'actions/settings-actions';
-import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
 import withVisibilityHandling from './handle-popover-visibility';
 import ToolsTooltips from './interactor-tooltips';
 
@@ -440,7 +440,7 @@ export class ToolsControlComponent extends React.PureComponent<Props, State> {
             setTimeout(() => this.runInteractionRequest(interactionId));
         } catch (error: any) {
             notification.error({
-                description: <ReactMarkdown>{error.message}</ReactMarkdown>,
+                description: <CVATMarkdown>{error.message}</CVATMarkdown>,
                 message: 'Interaction error occurred',
                 duration: null,
             });
@@ -533,7 +533,7 @@ export class ToolsControlComponent extends React.PureComponent<Props, State> {
             fetchAnnotations();
         } catch (error: any) {
             notification.error({
-                description: <ReactMarkdown>{error.message}</ReactMarkdown>,
+                description: <CVATMarkdown>{error.message}</CVATMarkdown>,
                 message: 'Tracking error occurred',
                 duration: null,
             });
@@ -787,7 +787,7 @@ export class ToolsControlComponent extends React.PureComponent<Props, State> {
                     } catch (error: any) {
                         notification.error({
                             message: 'Tracker initialization error',
-                            description: <ReactMarkdown>{error.message}</ReactMarkdown>,
+                            description: <CVATMarkdown>{error.message}</CVATMarkdown>,
                             duration: null,
                         });
                     } finally {
@@ -841,7 +841,7 @@ export class ToolsControlComponent extends React.PureComponent<Props, State> {
                     } catch (error: any) {
                         notification.error({
                             message: 'Tracking error',
-                            description: <ReactMarkdown>{error.message}</ReactMarkdown>,
+                            description: <CVATMarkdown>{error.message}</CVATMarkdown>,
                             duration: null,
                         });
                     } finally {
@@ -900,7 +900,7 @@ export class ToolsControlComponent extends React.PureComponent<Props, State> {
             } catch (error: any) {
                 notification.error({
                     message: 'Could not initialize OpenCV',
-                    description: <ReactMarkdown>{error.message}</ReactMarkdown>,
+                    description: <CVATMarkdown>{error.message}</CVATMarkdown>,
                     duration: null,
                 });
             } finally {
@@ -1231,8 +1231,12 @@ export class ToolsControlComponent extends React.PureComponent<Props, State> {
 
                     try {
                         this.setState({ mode: 'detection', fetching: true });
+
+                        // The function call endpoint doesn't support the cleanup and convMaskToPoly parameters.
+                        const { cleanup, convMaskToPoly, ...restOfBody } = body;
+
                         const result = await core.lambda.call(jobInstance.taskId, model, {
-                            ...body, frame, job: jobInstance.id,
+                            ...restOfBody, frame, job: jobInstance.id,
                         }) as DetectedShapes;
 
                         const states = result.map(
@@ -1307,7 +1311,7 @@ export class ToolsControlComponent extends React.PureComponent<Props, State> {
                                     });
                                 }
 
-                                if (data.type === 'mask' && data.points && body.convMaskToPoly) {
+                                if (data.type === 'mask' && data.points && convMaskToPoly) {
                                     return new core.classes.ObjectState({
                                         ...objectData,
                                         shapeType: ShapeType.POLYGON,
@@ -1342,7 +1346,7 @@ export class ToolsControlComponent extends React.PureComponent<Props, State> {
                         onSwitchToolsBlockerState({ buttonVisible: false });
                     } catch (error: any) {
                         notification.error({
-                            description: <ReactMarkdown>{error.message}</ReactMarkdown>,
+                            description: <CVATMarkdown>{error.message}</CVATMarkdown>,
                             message: 'Detection error occurred',
                             duration: null,
                         });
